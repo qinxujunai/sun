@@ -76,8 +76,6 @@ def guide_search(terms, limit=5):
 
 def framework_warnings():
     warnings = []
-    if FRAMEWORK.is_dir() and not any((FRAMEWORK / name).is_file() for name in ('source-framework.md', 'SKILL.md')):
-        warnings.append(f'{FRAMEWORK}: upstream framework file missing; research results may be incomplete')
     paths = [ROOT/'references/decision-framework.md', FRAMEWORK/'source-framework.md', FRAMEWORK/'SKILL.md']
     paths += sorted((FRAMEWORK/'research').glob('*.md'))
     for path in paths:
@@ -93,9 +91,9 @@ def framework_warnings():
     return warnings
 
 def framework_search(terms, limit=5):
-    if not FRAMEWORK.is_dir(): return None
     paths=[ROOT/'references/decision-framework.md', FRAMEWORK/'source-framework.md',FRAMEWORK/'SKILL.md']
     paths += sorted((FRAMEWORK/'research').glob('*.md'))
+    if not any(p.is_file() for p in paths): return None
     results=[]
     for p in paths:
         if not p.is_file(): continue

@@ -1,28 +1,11 @@
-const steps = [
-  { en: 'THE QUESTION', title: '先弄清楚，<br>你真正想解决什么。', desc: '明确目标、选项、时间和约束。信息不足时，先提出假设，或者问一个关键问题。', tag: '目标与约束' },
-  { en: 'THE PERSPECTIVE', title: '选择适合问题的视角。', desc: '创业与职业可以结合增长和风险；健康与生活问题优先查专业资料，不强行套用人物观点。', tag: '按问题选择资料' },
-  { en: 'THE EVIDENCE', title: '每个重要观点，<br>都要找到来处。', desc: '检索相关材料、阅读上下文，并核对出处、时间、地区和适用人群。', tag: '来源与上下文' },
-  { en: 'THE CHALLENGE', title: '让不同的答案<br>互相碰撞。', desc: '主动寻找反例，比较机会与代价。资料有分歧时，把各自的依据摆出来。', tag: '反例与风险' },
-  { en: 'THE NEXT STEP', title: '把判断，<br>变成可以行动的一步。', desc: '结合你的约束，比较可选路径，给出下一步以及什么情况会改变结论。', tag: '选择与行动' },
+const comparisons = [
+  {label:'基本分析', title:'先保留收入，<br>低成本验证需求。', desc:'考虑生活储备、借款风险和创业成本；在辞职之前，先用小规模试卖验证想法。', points:['现金流与生活储备','创业成本与市场需求','可执行的小规模验证']},
+  {label:'增加历史视角', title:'增长可以追，<br>但先看清创业的成本。', desc:'建议仍是先验证，再加入孙宇晨关于创业耗资、失败经验等历史材料，帮助理解机会与风险。', points:['增长机会与创业路径','创业耗资和失败经验','历史观点不等于个人建议']},
+  {label:'机会 + 生活约束', title:'先做小实验，<br>也为生活留出余地。', desc:'结合增长视角和人生指南，先验证真实需求，同时考虑亏损边界、现金流与经验适用范围。', points:['增长机会与最小实验','财务边界与生活成本','资料来源、反例和适用条件']}
 ];
-const tabs = [...document.querySelectorAll('[data-step]')];
-function selectStep(index, focus = false) {
-  const step = steps[index];
-  tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
-  document.getElementById('panel').setAttribute('aria-labelledby', `tab-${index}`);
-  document.getElementById('step-count').textContent = `0${index + 1} / 05`;
-  document.getElementById('step-en').textContent = step.en;
-  document.getElementById('step-title').innerHTML = step.title;
-  document.getElementById('step-desc').textContent = step.desc;
-  document.getElementById('step-tag').textContent = step.tag;
-  if (focus) tabs[index].focus();
-}
-tabs.forEach((tab, i) => {
-  tab.addEventListener('click', () => selectStep(i));
-  tab.addEventListener('keydown', event => {
-    if (!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Home','End'].includes(event.key)) return;
-    event.preventDefault();
-    const index = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (i + (['ArrowRight','ArrowDown'].includes(event.key) ? 1 : -1) + tabs.length) % tabs.length;
-    selectStep(index, true);
-  });
-});
+const compareTabs=[...document.querySelectorAll('[data-compare]')];
+function selectComparison(index,focus=false){const item=comparisons[index];compareTabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1});document.getElementById('compare-panel').setAttribute('aria-labelledby',`compare-tab-${index}`);document.getElementById('compare-label').textContent=item.label;document.getElementById('compare-title').innerHTML=item.title;document.getElementById('compare-desc').textContent=item.desc;document.getElementById('compare-points').replaceChildren(...item.points.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));if(focus)compareTabs[index].focus()}
+compareTabs.forEach((tab,index)=>{tab.addEventListener('click',()=>selectComparison(index));tab.addEventListener('keydown',event=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?compareTabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+compareTabs.length)%compareTabs.length;selectComparison(next,true)})});
+const sources={growth:{title:'孙宇晨认知框架',desc:'从相关框架中寻找增长机会与行动路径。人物观点是历史材料，不代表本人对你问题的意见。'},life:{title:'高性价比人生指南',desc:'检索适合问题的生活决策资料，并核查条目来源、时间、地区与适用条件。'},podcast:{title:'播客逐字稿与个人资料',desc:'公开版不包含逐字稿；自行导入后可检索原文。自动转写可能有误，重要引用应对照音频。'}};
+document.querySelectorAll('[data-source]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-source]').forEach(el=>{const selected=el===button;el.classList.toggle('active',selected);el.setAttribute('aria-pressed',String(selected))});const source=sources[button.dataset.source];document.getElementById('source-title').textContent=source.title;document.getElementById('source-desc').textContent=source.desc}));
+document.getElementById('copy-prompt').addEventListener('click',async()=>{const feedback=document.getElementById('copy-feedback');try{await navigator.clipboard.writeText(document.getElementById('install-prompt').textContent);feedback.textContent='已复制。把这句话发给你的智能体即可。'}catch{feedback.textContent='复制失败，请手动选中上面的文字复制。'}});

@@ -32,3 +32,17 @@ class PublicSkillTest(unittest.TestCase):
         result = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
         self.assertIn('12-创业与做生意.md', result)
         self.assertNotIn('UNAVAILABLE', result)
+
+    def test_framework_works_after_clean_install_from_another_directory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            skill = Path(temp) / 'sun'
+            shutil.copytree(ROOT / 'skills' / 'sun', skill)
+            # Git does not store empty directories, so emulate a clean checkout.
+            shutil.rmtree(skill / 'sources' / 'cognitive-framework', ignore_errors=True)
+            result = subprocess.run(
+                [sys.executable, str(skill / 'scripts' / 'search_knowledge.py'), '路径匹配', '--source', 'framework'],
+                cwd=temp, capture_output=True, text=True, check=True,
+            ).stdout
+            self.assertIn('decision-framework.md', result)
+            self.assertIn('路径匹配', result)
+            self.assertNotIn('UNAVAILABLE', result)
