@@ -47,3 +47,7 @@ python3 ~/.codex/skills/sun/scripts/search_knowledge.py 创业 风险 --limit 4
 用浏览器打开 `docs/index.html`，或在仓库目录运行 `python3 -m http.server 8000 --directory docs`。
 
 项目自有代码按 MIT 许可发布，见 [LICENSE](LICENSE)。第三方资料按各自许可使用，详见上面的来源与许可。
+
+## 暂存交接
+
+[项目对话与决策记录](TEMPORARY_PROJECT_CONTEXT.md)供后续协作参考，项目经确认后可删除。
