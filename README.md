@@ -11,7 +11,6 @@ if [ -e ~/.codex/skills/sun ]; then
   echo "sun 已存在，请先备份并手动合并。"
 else
   cp -R sun/skills/sun ~/.codex/skills/sun
-  python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py
 fi
 ```
 
@@ -19,11 +18,11 @@ fi
 
 > `$sun 帮我分析：我应该保留工作试创业，还是辞职全职投入？`
 
-公开包包含认知模型与《高性价比人生指南》。安装时会从原作者的公开仓库下载播客逐字稿到本机；原文不由本项目重新分发。需要 Git 和网络，下载失败时可运行 `python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py` 重试。已有逐字稿不会被覆盖。
+公开包包含认知模型、《高性价比人生指南》和 157 期播客自动转写。逐字稿按项目所有者所确认的公开转载授权收录；内容保留来源与原始转写，尚未逐期对照音频校对，引用时应注明并核对原音频。
 
-## 获取或导入播客逐字稿
+## 播客逐字稿
 
-如果安装时未下载，可执行 `python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py` 从原仓库下载。若已有本地文件，也可使用下方方式手动导入。
+公开包已包含播客转写。若你有另一套自己的逐字稿，可在备份并移除目标目录后使用下方命令导入；导入器不会覆盖现有资料。
 
 把下方路径替换为本机存放播客 Markdown 文件的文件夹：
 
@@ -41,7 +40,7 @@ python3 ~/.codex/skills/sun/scripts/search_knowledge.py 创业 风险 --limit 4
 
 - 认知框架参考 [0xquqi/sun-skill](https://github.com/0xquqi/sun-skill)，其 README 声明 MIT；本项目的模型手册为重新整理的内容。
 - 《[高性价比人生指南](https://github.com/eternity4719/HowToLiveBetter)》正文版本 `36c78569a8d21f26c7c650d2993c7103832ca4b5`，遵循 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)，保留原文及许可。复制时未改动正文；其中第三方材料和链接的权利需分别确认。
-- 播客转写参考 [justin-sun-podcast-markdown](https://github.com/diverHansun/justin-sun-podcast-markdown)，公开包不分发逐字稿。
+- 播客转写来源：[justin-sun-podcast-markdown](https://github.com/diverHansun/justin-sun-podcast-markdown)，版本 `afa0e4f9dd44ea1b81aff59fe2df568be7a47a85`；用户确认已取得公开转载授权。逐字稿为原作者整理的自动转写，原始播客及相关权利归各权利人所有。
 
 指南中的等级由原作者评定，地区、日期和适用人群可能影响结论。人物观点是历史材料；技能不是本人，也不能保证预测或决策结果。
 

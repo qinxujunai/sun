@@ -13,6 +13,7 @@ class PublicSkillTest(unittest.TestCase):
             base = Path(temp)
             skill = base / 'sun'
             shutil.copytree(ROOT / 'skills' / 'sun', skill)
+            shutil.rmtree(skill / 'sources' / 'podcast-transcripts', ignore_errors=True)
             query = [sys.executable, str(skill / 'scripts' / 'search_knowledge.py'), '示例原话', '--source', 'podcast']
             before = subprocess.run(query, capture_output=True, text=True, check=True).stdout
             self.assertIn('UNAVAILABLE', before)

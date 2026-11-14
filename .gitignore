@@ -1,6 +1,5 @@
 .DS_Store
 __pycache__/
 *.pyc
-skills/sun/sources/podcast-transcripts/
 skills/sun/new-materials/*
 !skills/sun/new-materials/README.md
