@@ -11,6 +11,7 @@ if [ -e ~/.codex/skills/sun ]; then
   echo "sun 已存在，请先备份并手动合并。"
 else
   cp -R sun/skills/sun ~/.codex/skills/sun
+  python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py
 fi
 ```
 
@@ -18,9 +19,11 @@ fi
 
 > `$sun 帮我分析：我应该保留工作试创业，还是辞职全职投入？`
 
-公开包包含认知模型与《高性价比人生指南》。播客逐字稿不包含在公开包中；没有导入时，技能会说明缺少原文，不会假装可以引用。
+公开包包含认知模型与《高性价比人生指南》。安装时会从原作者的公开仓库下载播客逐字稿到本机；原文不由本项目重新分发。需要 Git 和网络，下载失败时可运行 `python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py` 重试。已有逐字稿不会被覆盖。
 
-## 导入自行取得的逐字稿
+## 获取或导入播客逐字稿
+
+如果安装时未下载，可执行 `python3 ~/.codex/skills/sun/scripts/fetch_transcripts.py` 从原仓库下载。若已有本地文件，也可使用下方方式手动导入。
 
 把下方路径替换为本机存放播客 Markdown 文件的文件夹：
 
